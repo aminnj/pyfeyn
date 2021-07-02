@@ -28,7 +28,7 @@ def diag1():
         veebr,
         typ="wavyline",
         label=Label("Z^{0}/#gamma", offsety=6),
-        linecolor=ROOT.kBlue + 2,
+        linecolor=ROOT.kBlue + 1,
     ).draw()
 
     Propagator(vqp, veebr, typ="line").draw()
@@ -37,9 +37,9 @@ def diag1():
     vgluonl = Vertex(65 + 7.5, 50 + 7.5)
     vgluonr = Vertex(65 + 7.5 + 7.5 + 4, 50 - 4, Label("g", offsetx=2, offsety=2))
 
-    Propagator(vgluonl, vgluonr, typ="curlyline").draw()
+    Propagator(vgluonl, vgluonr, typ="curlyline", linecolor=ROOT.kGreen + 2).draw()
 
-    Label("e^+e^-\\rightarrow q\\bar{q}g", 50, 30, textsize=0.07).draw()
+    Label(r"e^+e^-\rightarrow q\bar{q}g", 50, 30, textsize=0.07).draw()
 
     save_diagram("feynmandiagram_eetoqq.pdf")
     os.system("ic feynmandiagram_eetoqq.pdf")
@@ -47,27 +47,27 @@ def diag1():
 
 def diag2():
 
-    vg1 = Vertex(20, 60, label=Label("g", offsetx=-2))
-    vg2 = Vertex(20, 30, label=Label("g", offsetx=-2))
+    vg1 = Vertex(20, 60, label=Label("g", offsetx=-3))
+    vg2 = Vertex(20, 30, label=Label("g", offsetx=-3))
     vg1t = Vertex(45, 60)
     vg2t = Vertex(45, 30)
-    vg1t_right = Vertex(70, 60, label=Label("t", offsetx=2))
-    vg2t_right = Vertex(70, 30, label=Label("t", offsetx=2))
+    vg1t_right = Vertex(70, 60, label=Label("t", offsetx=3))
+    vg2t_right = Vertex(70, 30, label=Label("t", offsetx=3))
     vtth = Vertex(45, 45)
-    vh_right = Vertex(70, 45, label=Label("H(A)", offsetx=5))
+    vh_right = Vertex(70, 45, label=Label("H(A)", offsetx=8))
 
     init_diagram()
 
     Propagator(vg1, vg1t, typ="curlyline").draw()
     Propagator(vg2, vg2t, typ="curlyline").draw()
     Propagator(
-        vtth, vg1t, typ="line", label=Label("t", offsetx=-2), linecolor=ROOT.kRed - 4
+        vtth, vg1t, typ="line", label=Label("t", offsetx=-3), linecolor=ROOT.kRed - 4
     ).draw()
     Propagator(
         vtth,
         vg2t,
         typ="line",
-        label=Label("t", offsetx=-2),
+        label=Label("t", offsetx=-3),
         linecolor=ROOT.kRed - 4,
         fliparrow=True,
     ).draw()
@@ -220,6 +220,40 @@ def diag6():
     pf.save_diagram("feynmandiagram_zqq.pdf")
     os.system("ic feynmandiagram_zqq.pdf")
 
+def diag7():
+    init_diagram()
+
+    ts = 0.06
+    v_gluino = Vertex(30, 50)
+    v_ttchi1 = Vertex(55, 50+10, marker=Marker(color=ROOT.kBlack, radius=1))
+    v_ttchi2 = Vertex(55, 50-10, marker=Marker(color=ROOT.kBlack, radius=1))
+    Propagator(v_gluino, v_ttchi1, typ="curlystraightline", label=Label(r"\tilde{\mathrm{g}}", offsetx=-2, offsety=+6, textsize=ts)).draw()
+    Propagator(v_gluino, v_ttchi2, typ="curlystraightline", label=Label(r"\tilde{\mathrm{g}}", offsetx=-2, offsety=-6, textsize=ts)).draw()
+
+    for i,v in [(1, v_ttchi1), (-1, v_ttchi2)]:
+        v_t1 = Vertex(75, 50+i*30, label=Label(r"\mathrm{t}", offsetx=3, textsize=ts))
+        v_t2 = Vertex(82, 50+i*20, label=Label(r"\mathrm{\bar{t}}", offsetx=3, textsize=ts))
+        v_chi = Vertex(85, 50+i*7, label=Label(r"#tilde{#chi}^0_1", offsetx=5, textsize=ts))
+        Propagator(v, v_t1, typ="line", noarrow=True).draw()
+        Propagator(v, v_t2, typ="line", noarrow=True).draw()
+        Propagator(v, v_chi, typ="dottedline").draw()
+
+    for i in [-1,0,1]:
+        dv = 0.8
+        v1 = Vertex(v_gluino.x1+i*dv, v_gluino.y1+i*dv)
+        v2 = Vertex(v_gluino.x1+i*dv-20, v_gluino.y1+i*dv+20)
+        Propagator(v1, v2, noarrow=True).draw()
+        v1 = Vertex(v_gluino.x1+i*dv-20, v_gluino.y1-i*dv-20)
+        v2 = Vertex(v_gluino.x1+i*dv, v_gluino.y1-i*dv)
+        Propagator(v1, v2, noarrow=True).draw()
+    Vertex(v_gluino.x1, v_gluino.y1, marker=Marker(color=ROOT.kGray+1, radius=4, linewidth=2)).draw()
+    Label(r"\mathrm{p}", 10, 50+12, textsize=ts).draw()
+    Label(r"\mathrm{p}", 10, 50-12, textsize=ts).draw()
+
+    save_diagram("feynmandiagram_gluino.pdf")
+    os.system("ic feynmandiagram_gluino.pdf")
+
+
 
 if __name__ == "__main__":
 
@@ -229,3 +263,4 @@ if __name__ == "__main__":
     diag4()
     diag5()
     diag6()
+    diag7()

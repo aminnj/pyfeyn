@@ -131,7 +131,8 @@ class Propagator(object):
             prop1.SetLineStyle(11)
         if self.typ == "dottedline":
             prop1 = r.TLine(self.v1.x1, self.v1.y1, self.v2.x1, self.v2.y1)
-            prop1.SetLineStyle(3)
+            r.gStyle.SetLineStyleString(11, "20 50")
+            prop1.SetLineStyle(11)
         elif self.typ == "curlyline":
             prop1 = r.TCurlyLine(self.v1.x1, self.v1.y1, self.v2.x1, self.v2.y1)
             prop1.SetWaveLength(prop1.GetWaveLength() * 1.6)

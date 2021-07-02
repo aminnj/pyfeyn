@@ -9,8 +9,8 @@ The following diagrams come from `python examples.py`
 
 | <!-- -->    | <!-- -->    | <!-- -->    |
 |--------|--------|--------|
-<img src="images/feynmandiagram_eetoqq.png" height="150px" />  | <img src="images/feynmandiagram_tth.png" height="125px" /> 
-<img src="images/feynmandiagram_hzzd.png" height="200px" /> | <img src="images/feynmandiagram_Bphi.png" height="200px" /> |<img src="images/feynmandiagram_tttt.png" height="175px" />
+<img src="images/feynmandiagram_eetoqq.png" height="150px" />  | <img src="images/feynmandiagram_tth.png" height="125px" /> | <img src="images/feynmandiagram_tttt.png" height="175px" /> 
+<img src="images/feynmandiagram_hzzd.png" height="200px" /> | <img src="images/feynmandiagram_Bphi.png" height="200px" /> |<img src="images/feynmandiagram_gluino.png" height="200px" />
 
 The API is pretty simple. The `0-100` coordinate system can be optionally drawn with `draw_grid()`.
 
