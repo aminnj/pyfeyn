@@ -20,12 +20,12 @@ import pyfeyn as pf
 pf.init_diagram()
 pf.draw_grid()
 
-v_z = pf.Vertex(20, 50, label=pf.Label("Z", offsetx=-3))
+v_z = pf.Vertex(20, 50)
 v_zqq = pf.Vertex(50, 50)
 v_q1 = pf.Vertex(70, 70, label=pf.Label(r"\mathrm{q}", offsetx=3))
 v_q2 = pf.Vertex(70, 30, label=pf.Label(r"\bar{\mathrm{q}}", offsetx=3))
 
-pf.Propagator(v_z, v_zqq, typ="wavyline").draw()
+pf.Propagator(v_z, v_zqq, typ="wavyline", label=pf.Label("Z", offsety=6)).draw()
 pf.Propagator(v_zqq, v_q1, typ="line").draw()
 pf.Propagator(v_zqq, v_q2, typ="line", fliparrow=True).draw()
 

@@ -203,64 +203,84 @@ def diag5():
 
 
 def diag6():
+    init_diagram()
+
+    ts = 0.06
+    v_gluino = Vertex(30, 50)
+    v_ttchi1 = Vertex(55, 50 + 10, marker=Marker(color=ROOT.kBlack, radius=1))
+    v_ttchi2 = Vertex(55, 50 - 10, marker=Marker(color=ROOT.kBlack, radius=1))
+    Propagator(
+        v_gluino,
+        v_ttchi1,
+        typ="curlystraightline",
+        label=Label(r"\tilde{\mathrm{g}}", offsetx=-2, offsety=+6, textsize=ts),
+    ).draw()
+    Propagator(
+        v_gluino,
+        v_ttchi2,
+        typ="curlystraightline",
+        label=Label(r"\tilde{\mathrm{g}}", offsetx=-2, offsety=-6, textsize=ts),
+    ).draw()
+
+    for i, v in [(1, v_ttchi1), (-1, v_ttchi2)]:
+        v_t1 = Vertex(
+            75, 50 + i * 30, label=Label(r"\mathrm{t}", offsetx=3, textsize=ts)
+        )
+        v_t2 = Vertex(
+            82, 50 + i * 20, label=Label(r"\mathrm{\bar{t}}", offsetx=3, textsize=ts)
+        )
+        v_chi = Vertex(
+            85, 50 + i * 7, label=Label(r"#tilde{#chi}^0_1", offsetx=5, textsize=ts)
+        )
+        Propagator(v, v_t1, typ="line", noarrow=True).draw()
+        Propagator(v, v_t2, typ="line", noarrow=True).draw()
+        Propagator(v, v_chi, typ="dottedline").draw()
+
+    for i in [-1, 0, 1]:
+        dv = 0.8
+        v1 = Vertex(v_gluino.x1 + i * dv, v_gluino.y1 + i * dv)
+        v2 = Vertex(v_gluino.x1 + i * dv - 20, v_gluino.y1 + i * dv + 20)
+        Propagator(v1, v2, noarrow=True).draw()
+        v1 = Vertex(v_gluino.x1 + i * dv - 20, v_gluino.y1 - i * dv - 20)
+        v2 = Vertex(v_gluino.x1 + i * dv, v_gluino.y1 - i * dv)
+        Propagator(v1, v2, noarrow=True).draw()
+    Vertex(
+        v_gluino.x1,
+        v_gluino.y1,
+        marker=Marker(color=ROOT.kGray + 1, radius=4, linewidth=2),
+    ).draw()
+    Label(r"\mathrm{p}", 10, 50 + 12, textsize=ts).draw()
+    Label(r"\mathrm{p}", 10, 50 - 12, textsize=ts).draw()
+
+    save_diagram("feynmandiagram_gluino.pdf")
+    os.system("ic feynmandiagram_gluino.pdf")
+
+
+def diag7():
     import pyfeyn as pf
 
     pf.init_diagram()
     pf.draw_grid()
 
-    v_z = pf.Vertex(20, 50, label=pf.Label("Z", offsetx=-3))
+    v_z = pf.Vertex(20, 50)
     v_zqq = pf.Vertex(50, 50)
     v_q1 = pf.Vertex(70, 70, label=pf.Label(r"\mathrm{q}", offsetx=3))
     v_q2 = pf.Vertex(70, 30, label=pf.Label(r"\bar{\mathrm{q}}", offsetx=3))
 
-    pf.Propagator(v_z, v_zqq, typ="wavyline").draw()
+    pf.Propagator(v_z, v_zqq, typ="wavyline", label=pf.Label("Z", offsety=6)).draw()
     pf.Propagator(v_zqq, v_q1, typ="line").draw()
     pf.Propagator(v_zqq, v_q2, typ="line", fliparrow=True).draw()
 
     pf.save_diagram("feynmandiagram_zqq.pdf")
     os.system("ic feynmandiagram_zqq.pdf")
 
-def diag7():
-    init_diagram()
-
-    ts = 0.06
-    v_gluino = Vertex(30, 50)
-    v_ttchi1 = Vertex(55, 50+10, marker=Marker(color=ROOT.kBlack, radius=1))
-    v_ttchi2 = Vertex(55, 50-10, marker=Marker(color=ROOT.kBlack, radius=1))
-    Propagator(v_gluino, v_ttchi1, typ="curlystraightline", label=Label(r"\tilde{\mathrm{g}}", offsetx=-2, offsety=+6, textsize=ts)).draw()
-    Propagator(v_gluino, v_ttchi2, typ="curlystraightline", label=Label(r"\tilde{\mathrm{g}}", offsetx=-2, offsety=-6, textsize=ts)).draw()
-
-    for i,v in [(1, v_ttchi1), (-1, v_ttchi2)]:
-        v_t1 = Vertex(75, 50+i*30, label=Label(r"\mathrm{t}", offsetx=3, textsize=ts))
-        v_t2 = Vertex(82, 50+i*20, label=Label(r"\mathrm{\bar{t}}", offsetx=3, textsize=ts))
-        v_chi = Vertex(85, 50+i*7, label=Label(r"#tilde{#chi}^0_1", offsetx=5, textsize=ts))
-        Propagator(v, v_t1, typ="line", noarrow=True).draw()
-        Propagator(v, v_t2, typ="line", noarrow=True).draw()
-        Propagator(v, v_chi, typ="dottedline").draw()
-
-    for i in [-1,0,1]:
-        dv = 0.8
-        v1 = Vertex(v_gluino.x1+i*dv, v_gluino.y1+i*dv)
-        v2 = Vertex(v_gluino.x1+i*dv-20, v_gluino.y1+i*dv+20)
-        Propagator(v1, v2, noarrow=True).draw()
-        v1 = Vertex(v_gluino.x1+i*dv-20, v_gluino.y1-i*dv-20)
-        v2 = Vertex(v_gluino.x1+i*dv, v_gluino.y1-i*dv)
-        Propagator(v1, v2, noarrow=True).draw()
-    Vertex(v_gluino.x1, v_gluino.y1, marker=Marker(color=ROOT.kGray+1, radius=4, linewidth=2)).draw()
-    Label(r"\mathrm{p}", 10, 50+12, textsize=ts).draw()
-    Label(r"\mathrm{p}", 10, 50-12, textsize=ts).draw()
-
-    save_diagram("feynmandiagram_gluino.pdf")
-    os.system("ic feynmandiagram_gluino.pdf")
-
-
 
 if __name__ == "__main__":
 
-    diag1()
-    diag2()
-    diag3()
-    diag4()
-    diag5()
-    diag6()
+    # diag1()
+    # diag2()
+    # diag3()
+    # diag4()
+    # diag5()
+    # diag6()
     diag7()
