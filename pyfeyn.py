@@ -179,22 +179,16 @@ class Propagator(object):
             prop1.SetFillColorAlpha(0, 0.0)
             drawopt = "only"
 
-        prop1.SetLineColor(self.linecolor)
-        prop1.SetLineWidth(self.linewidth)
 
+        if prop1:
+            prop1.SetLineColor(self.linecolor)
+            prop1.SetLineWidth(self.linewidth)
+            prop1.Draw(drawopt)
+            _nodelete.append(prop1)
         if prop2:
             prop2.SetLineColor(self.linecolor)
             prop2.SetLineWidth(self.linewidth)
-
-        if prop1:
-            prop1.Draw(drawopt)
-        if prop2:
             prop2.Draw(drawopt)
-
-        # need this or else pyroot deletes the object and we don't see it anymore :(
-        if prop1:
-            _nodelete.append(prop1)
-        if prop2:
             _nodelete.append(prop2)
 
         if not self.noarrow:
